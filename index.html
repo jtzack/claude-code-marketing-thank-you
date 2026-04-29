@@ -328,10 +328,13 @@
   </div>
 
   <script>
-    // Read email from #hash first (preserves "+"), then ?query, else placeholder
-    var hashParams = new URLSearchParams(window.location.hash.slice(1));
-    var queryParams = new URLSearchParams(window.location.search);
-    var email = hashParams.get('email') || queryParams.get('email') || 'xxxxx';
+    // Parse email manually so literal "+" survives (URLSearchParams would turn it into a space)
+    function readEmail(source) {
+      var match = source.match(/(?:^|[?&#])email=([^&]*)/);
+      if (!match) return '';
+      try { return decodeURIComponent(match[1]); } catch (e) { return match[1]; }
+    }
+    var email = readEmail(window.location.hash) || readEmail(window.location.search) || 'xxxxx';
     var typeformId = 'e2OLUI6U';
     var src = 'https://form.typeform.com/to/' + typeformId + '#email=' + encodeURIComponent(email);
     document.getElementById('typeform-embed').src = src;
