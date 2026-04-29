@@ -275,6 +275,9 @@
     }
 
     .survey-embed {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
       background: var(--espresso);
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -328,7 +331,6 @@
     // Pass email from URL param to Typeform
     var params = new URLSearchParams(window.location.search);
     var email = params.get('email') || '';
-    // Replace with your actual Typeform ID when ready
     var typeformId = 'e2OLUI6U';
     var src = 'https://form.typeform.com/to/' + typeformId;
     if (email) src += '#email=' + encodeURIComponent(email);
