@@ -328,9 +328,10 @@
   </div>
 
   <script>
-    // Pass email from URL param to Typeform; fall back to placeholder if missing
-    var params = new URLSearchParams(window.location.search);
-    var email = params.get('email') || 'xxxxx';
+    // Read email from #hash first (preserves "+"), then ?query, else placeholder
+    var hashParams = new URLSearchParams(window.location.hash.slice(1));
+    var queryParams = new URLSearchParams(window.location.search);
+    var email = hashParams.get('email') || queryParams.get('email') || 'xxxxx';
     var typeformId = 'e2OLUI6U';
     var src = 'https://form.typeform.com/to/' + typeformId + '#email=' + encodeURIComponent(email);
     document.getElementById('typeform-embed').src = src;
